@@ -86,6 +86,7 @@ print("Root Mean Squared Error(on training data): %0.3f" % root_mean_squared_err
 
 min_house_value = california_housing_dataframe["median_house_value"].min()
 max_house_value = california_housing_dataframe["median_house_value"].max()
+min_max_defference = max_house_value - min_house_value
 
 print ("Min. Median House value: %0.3f" % min_house_value)
 print( "Max. Median House valye: %0.3f" % max_house_value)
