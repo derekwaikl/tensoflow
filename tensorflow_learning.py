@@ -92,3 +92,8 @@ print ("Min. Median House value: %0.3f" % min_house_value)
 print( "Max. Median House valye: %0.3f" % max_house_value)
 print ("Difference between min. and max.: %0.3f" % min_max_difference)
 print( "Root Mean Squared Error: %0.3f" % root_mean_squared_error)
+
+calibration_data = pd.DataFrame()
+calibration_data ["predictions"] = pd.Series(predictions)
+calibration_data ["targets"] = pd.Series(targets)
+calibration_data.describe()
