@@ -124,3 +124,61 @@ plt.scatter(sample["total_rooms"],sample["median_house_value"])
 
 # Display graph
 plt.show()
+
+def train_model (learning_rate, steps, batch_size, input_feature="total_rooms"):
+    """trains a linear regression model of one feature.
+
+    Args:
+    learning_rate: A 'float', the learning rate.
+    steps: A non-zero 'int' , the total number of training steps. A training step 
+        consists of a forward and backward pass using a single batch.
+    batch_size: A non-zero 'int', the batch size.
+    input_feature: A 'string' specifying a column from 'california_housing_dataframe'
+        to use  as input feature.
+    """
+
+    periods = 10
+    steps_per_period = steps / periods
+    my_feature = input_feature
+    my_feature_data = california_housing_dataframe[[my_feature]]
+    my_label = "median_house_value"
+    targets = california_housing_dataframe[my_label]
+
+    # Create feature columns
+    feature_columns = [tf.feature_column.numeric_column(my_feature)]
+
+    # Create input functions
+    training_input_fn = lambda:my_input_fn(my_feature_data, targets,batch_size=batch_size)
+    prediction_input_fn = lambda:my_input_fn(my_feature_data, targets, num_epochs=1, shuffle=False)
+
+    # Create a linear regressor object
+    my_optimizer =tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
+    my_optimizer =tf.contrib.estimator.clip_gradient s_by_norm(my_optimizer,5.0)
+    Linear_regressor = tf.estimator.LinearRegressor(
+        feature_columns=feature_columns,
+        optimizer=my_optimizer
+    )
+
+    # Setup to pot the state of our model's line each period.
+    plt.figure(figsize =(15,6))
+    plt.subplot(1,2,1)
+    plt.title("learned Line by Period")
+    plt.ylabel(my_label)
+    plt.xlabel(my_feature)
+    sample = california_housing_dataframe.sample(n=300)
+    plt.scatter(sample[my_feature], sample[my_label])
+    colors = [cm.coolwarm(x) for x in np.linspace(-1,1,periods)]
+    
+    #Train the model, but do so inside a loop so that we can periodically assess 
+    #loss metrics
+
+    print("Training model...")
+    print("RMSE (on training data):")
+    root_mean_squared_errors =[]
+
+    for period in range (0,periods):
+        # Train the model, starting from the prior state
+        linear_regressor.train(
+            input_fn =training_input_fn,
+            steps = steps_per_period
+        )
