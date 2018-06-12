@@ -105,7 +105,7 @@ x_0 = sample["total_rooms"].min()
 x_1 = sample["total_rooms"].max()
 
 # Retrieve the final weight and bias generated during training
-weight - linear_regressor.get_variable_value('linear/linear_model/total_rooms/weights')[0]
+weight = linear_regressor.get_variable_value('linear/linear_model/total_rooms/weights')[0]
 bias = linear_regressor.get_variable_value('linear/linear_model/bias_weights')
 
 # Get the predicted median_house_values for the min and max total_rooms values
