@@ -83,3 +83,11 @@ mean_squared_error = metrics.mean_squared_error(predictions, targets)
 root_mean_squared_error = math.sqrt(mean_squared_error)
 print("Mean Squared Error(on training data): %0.3f" % mean_squared_error)
 print("Root Mean Squared Error(on training data): %0.3f" % root_mean_squared_error)
+
+min_house_value = california_housing_dataframe["median_house_value"].min()
+max_house_valye = california_housing_dataframe["median_house_value"].max()
+
+print ("Min. Median House value: %0.3f" % min_house_value)
+print( "Max. Median House valye: %0.3f" % max_house_value)
+print ("Difference between min. and max.: %0.3f" % min_max_difference)
+print( "Root Mean Squared Error: %0.3f" % root_mean_squared error)
