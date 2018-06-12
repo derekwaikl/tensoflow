@@ -65,6 +65,17 @@ def my_input_fn(features,targets,batch,batch_size=1,shuffle=True,num_epochs=None
     features, labels = ds.make_one_shot_iterator().get_next()
     return features, labels
 
-    _ = linear_regressor.train(input_fn = lambda: my_input_fn(my_feature,targets),steps=100)
+_ = linear_regressor.train(input_fn = lambda:my_input_fn(my_feature,targets),steps=100)
+
+# Create an input function for predictions
+# Note: Since we are making just one prediction for each example, we
+# don't need to repeat or shuffle the data here.
+prediction_input_fn = lambda: my_input_fn (my_feature, targets, num_epochs=1,shuffle= False)
+
+#Call predict() on the linear_regressor to make predictions.
+predictions = linear_regressor.predict(input_fn=prediction_input_fn)
+
+# Format predictions as a Numpy array, so we can calculate error metrics.
+predictions = np.array([item['prediction'][0] for item in predictions])
 
 
