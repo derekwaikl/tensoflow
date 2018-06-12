@@ -38,7 +38,7 @@ my_optimizer = tf.contrib.estimator.clip_gradients_by_norm(my_optimizer,5.0)
 
 linear_regressor = tf.estimator.LinearRegressor(feature_columns=feature_columns,optimizer=my_optimizer)
 
-def my_input_fn(features,targets,batch,batch_size=1,shuffle=True,num_epochs=None):
+def my_input_fn(features,targets,batch_size=1,shuffle=True,num_epochs=None):
     '''Train a linear regression model of one feature
 
     Args:
@@ -78,4 +78,8 @@ predictions = linear_regressor.predict(input_fn=prediction_input_fn)
 # Format predictions as a Numpy array, so we can calculate error metrics.
 predictions = np.array([item['prediction'][0] for item in predictions])
 
-
+#Print Mean Squared Error and Root Mean Squared Error.
+mean_squared_error = metrics.mean_squared_error(predictions, targets)
+root_mean_squared_error = math.sqrt(mean_squared_error)
+print("Mean Squared Error(on training data): %0.3f" % mean_squared_error)
+print("Root Mean Squared Error(on training data): %0.3f" % root_mean_squared_error)
