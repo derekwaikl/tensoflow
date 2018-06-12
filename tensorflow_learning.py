@@ -113,7 +113,7 @@ y_0 = weight * x_0 + bias
 y_1 = weight * x_1 + bias
 
 # Plot our regression line from (x_0,y_0) to (x_1,y_1)
-plt.plot([x_0,x_1],[y_0,Y_1], c='r')
+plt.plot([x_0,x_1],[y_0,y_1], c='r')
 
 #Label the graph axes.
 plt.ylabel("median_house_value")
