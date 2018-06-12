@@ -76,7 +76,7 @@ prediction_input_fn = lambda: my_input_fn (my_feature, targets, num_epochs=1,shu
 predictions = linear_regressor.predict(input_fn=prediction_input_fn)
 
 # Format predictions as a Numpy array, so we can calculate error metrics.
-predictions = np.array([item['prediction'][0] for item in predictions])
+predictions = np.array([item['predictions'][0] for item in predictions])
 
 #Print Mean Squared Error and Root Mean Squared Error.
 mean_squared_error = metrics.mean_squared_error(predictions, targets)
